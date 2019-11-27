@@ -16,7 +16,7 @@ CFLAGS+= -fno-ident
 CFLAGS+= -ffast-math
 CFLAGS+= -W -Wall
 
-all: audiofiles $(BIN)
+all: data $(BIN)
 
 $(BIN): $(SRC)
 	$(CC) $(CFLAGS) -o $@ src/$@.c
@@ -37,3 +37,4 @@ original-sound: audiofiles
 .PHONY: clean
 clean:
 	rm -rf $(BIN)
+	rm -rf data
