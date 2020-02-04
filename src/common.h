@@ -20,7 +20,7 @@ int outputrate    = 44100;
 double noisefloor = 0;
 
 void argparse(int argc, char *argv[]) {
-  int i, nf = -24;
+  int i, nf = -48;
 
   for(i=1;i<argc;i++) {
 
@@ -49,7 +49,7 @@ void argparse(int argc, char *argv[]) {
         (strcmp("--noisefloor", argv[i]) == 0)
     ) {
       i++;
-      nf = atoi(argv[i]);
+      nf = 0-atoi(argv[i]);
     }
 
   }
