@@ -14,12 +14,13 @@ extern "C" {
 #define M_2PI (2*M_PI)
 #endif
 
-int interval   = 1200;
-int inputrate  = 44100;
-int outputrate = 44100;
+int interval      = 1200;
+int inputrate     = 44100;
+int outputrate    = 44100;
+double noisefloor = 0;
 
 void argparse(int argc, char *argv[]) {
-  int i;
+  int i, nf = -24;
 
   for(i=1;i<argc;i++) {
 
@@ -44,8 +45,16 @@ void argparse(int argc, char *argv[]) {
       outputrate = atoi(argv[i]);
     }
 
+    if ((strcmp("-n"          , argv[i]) == 0) ||
+        (strcmp("--noisefloor", argv[i]) == 0)
+    ) {
+      i++;
+      nf = atoi(argv[i]);
+    }
+
   }
 
+  noisefloor = exp10((double)nf/20);
 }
 
 #ifdef __cplusplus
