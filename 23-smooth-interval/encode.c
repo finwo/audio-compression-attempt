@@ -43,8 +43,9 @@ int main(int argc, char *argv[]) {
   unsigned char channel;
   signed short sshort  = 0;
   signed short cshort  = 0;
-  signed short loudest = 0;
-  signed short nf      = 0;
+  double loudest = 0;
+  double level = 0;
+  double nf      = 0;
 
   while(!feof(stdin)) {
 
@@ -55,17 +56,17 @@ int main(int argc, char *argv[]) {
       for( c=0 ; c<255 ; c++ ) {
         sshort = sc[c][0] / interval;
         cshort = sc[c][1] / interval;
-        loudest = max(loudest, abs(sshort));
-        loudest = max(loudest, abs(cshort));
+        loudest = max(loudest, sqrt(abs(sshort)*abs(sshort) + abs(cshort)*abs(cshort)));
       }
 
       // Build noise floor
-      nf = (signed short)((double)loudest * noisefloor);
+      nf = loudest * noisefloor;
 
       for( c=0; c<255; c++ ) {
         sshort = sc[c][0] / interval;
         cshort = sc[c][1] / interval;
-        if (max(abs(sshort),abs(cshort)) > nf) {
+        level = sqrt(abs(sshort)*abs(sshort) + abs(cshort)*abs(cshort));
+        if (level > nf) {
           sshort = htons(sshort);
           cshort = htons(cshort);
           fwrite(&c, 1, 1, stdout);

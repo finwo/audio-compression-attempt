@@ -20,7 +20,7 @@ int outputrate    = 44100;
 double noisefloor = 0;
 
 void argparse(int argc, char *argv[]) {
-  int i, nf = -48;
+  int i, nf = -12;
 
   for(i=1;i<argc;i++) {
 
