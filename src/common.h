@@ -54,7 +54,7 @@ void argparse(int argc, char *argv[]) {
 
   }
 
-  noisefloor = exp10((double)nf/20);
+  noisefloor = pow(10, (double)nf/20);
 }
 
 #ifdef __cplusplus
