@@ -14,56 +14,20 @@
 double weight_band(int band) {
   int hinterval = interval / 2;
   if (band > hinterval) band = interval - band;
-  double f  = 44100.0 / interval * band;
-  double F  = 44100.0 / interval * band;
+  double f  = inputrate / interval * band / channels;
+  double F  = f;
   double LA = 0;
   double LF = 0;
   double FD = 0;
-
-  double freqs[] = {
-    8,
-    16,
-    31.5,
-    63,
-    125,
-    250,
-    500,
-    1000,
-    2000,
-    4000,
-    8000,
-    16000,
-    20000,
-  };
-
-  double weightA[] = {
-    -77.8,
-    -56.7,
-    -39.4,
-    -26.2,
-    -16.1,
-    -8.6,
-    -3.2,
-    0,
-    1.2,
-    1.0,
-    -1.1,
-    -6.6,
-    -9.3,
-  };
-
-  // Linear shift across A weights
   int i;
-  for(i=0; i<12; i++) {
-    if (f > freqs[i]) { LF=freqs[i]; continue; }
+  for(i=0; freqs[i+1]; i++) {
+    if ((f < freqs[i]) || (f > freqs[i+1])) { LF=freqs[i]; continue; }
     F  = f - freqs[i];
     FD = freqs[i+1] - freqs[i];
     F  = F / FD;
-    return pow(10, ((weightA[i] * (1-F)) + (weightA[i+1] * F)) / 20);
+    return pow(10, ((weighting[i] * (1-F)) + (weighting[i+1] * F)) / 20);
   }
-
-  // Fallback
-  return 0;
+  return 0.01; // -60dB, fallback (ultrasound, stereo, etc)
 }
 
 int main(int argc, char *argv[]) {
@@ -109,7 +73,9 @@ int main(int argc, char *argv[]) {
       skipped = 0;
       for(c=0; c<interval; c++) {
         dsample = *(o+c);
-        if (fabs(dsample) * (1.0/32768.0) <= msample) {
+        if (fabs(dsample) < (1.0/32768.0)) {
+          skipped++;
+          continue;
         }
         if (fabs(dsample) * weight_band(c) <= msample) {
           skipped++;
@@ -136,7 +102,7 @@ int main(int argc, char *argv[]) {
         *(f+c+hinterval) = 0;
       }
 
-      fprintf(stderr, "Rate: %f\n", 100*(((double)interval-(double)skipped))/(double)hinterval);
+      /* fprintf(stderr, "Rate: %f\n", 100*(((double)interval-(double)skipped))/(double)hinterval); */
     }
 
     // Store the current sample
