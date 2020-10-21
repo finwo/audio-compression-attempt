@@ -12,6 +12,7 @@
 #define MIN(a,b) ((a<b)?a:b)
 
 double weight_band(int band) {
+  if (!weighting) return 1; // dbZ
   int hinterval = interval / 2;
   if (band > hinterval) band = interval - band;
   double f  = inputrate / interval * band / channels;
@@ -27,7 +28,7 @@ double weight_band(int band) {
     F  = F / FD;
     return pow(10, ((weighting[i] * (1-F)) + (weighting[i+1] * F)) / 20);
   }
-  return 0.01; // -60dB, fallback (ultrasound, stereo, etc)
+  return 0.01; // -40dB, fallback (ultrasound, stereo, etc)
 }
 
 int main(int argc, char *argv[]) {

@@ -66,6 +66,21 @@ double weightC[] = {
   -8.6, // 16000
   -11.2, // 20000
 };
+double weightF[] = {
+  -47.55, // 8
+  -32.4, // 16
+  -21.25, // 31.5
+  -13.5, // 63
+  -8.2, // 125
+  -4.35, // 250
+  -1.6, // 500
+  0, // 1000
+  0.5, // 2000
+  0.1, // 4000
+  -2.05, // 8000
+  -7.65, // 16000
+  -10.25, // 20000
+};
 double *weighting = NULL;
 
 void argparse(int argc, char *argv[]) {
@@ -124,6 +139,13 @@ void argparse(int argc, char *argv[]) {
         (strcmp("--dbC", argv[i]) == 0)
     ) {
       weighting = weightC;
+      continue;
+    }
+
+    if ((strcmp("-F"        , argv[i]) == 0) ||
+        (strcmp("--dbF", argv[i]) == 0)
+    ) {
+      weighting = weightF;
       continue;
     }
 

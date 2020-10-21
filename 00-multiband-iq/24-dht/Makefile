@@ -14,7 +14,7 @@ CFLAGS+= -ffast-math
 CFLAGS+= -W
 
 NF=20
-W=dbA
+W=dbC
 C=2
 SL=$(shell echo "4096 * $(C)" | bc)
 
