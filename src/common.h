@@ -14,7 +14,15 @@ extern "C" {
 #define M_2PI (2*M_PI)
 #endif
 
-int interval      = 1200;
+#ifndef MAX
+#define MAX(a,b) ((a>b)?a:b)
+#endif
+
+#ifndef MIN
+#define MIN(a,b) ((a<b)?a:b)
+#endif
+
+int interval      = 1024;
 int inputrate     = 44100;
 int outputrate    = 44100;
 int channels      = 1;
