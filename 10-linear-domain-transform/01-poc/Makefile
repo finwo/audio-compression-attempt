@@ -48,13 +48,13 @@ sound: $(BIN)
 .PHONY: jinjer
 jinjer: $(BIN)
 	# yes | ffmpeg -i ~/Videos/Music\ Clips/Jinjer/JINJER\ -\ Pisces\ \(Live\ Session\)\ _\ Napalm\ Records-SQNtGoM3FVU.webm -f s16be -acodec pcm_s16be -ac $(CH) -filter:a "volume=-3dB" ../../data/jinjer-pisces.44k1.s16be.pcm
-	cat ../../data/jinjer-pisces.44k1.s16be.pcm | ./encode -r $(SL) | pv | ./decode -r $(SL) | pacat --raw --format=s16be --rate=44100 --channels=$(CH)
+	cat ../../data/jinjer-pisces.44k1.s16be.pcm | ./encode -r $(SL) | pv | ./decode -r $(SL) | pacat --raw --format=s16be --rate=44100 --channels=1
 
-# .PHONY: ola
-# ola: $(BIN)
+.PHONY: ola
+ola: $(BIN)
 # 	# 96000 / 120 = 800hz modulation
-# 	yes | ffmpeg -i ~/Videos/Music\ Clips/OLA\ ENGLUND\ -\ Cerberus\ -\ \(NEW\ SINGLE\ 2019\)-SvYVSJteqF4.mkv -f s16be -acodec pcm_s16be -ac $(C) -filter:a "volume=-3dB" ../data/ola-englund-cerberus.44k1.s16be.pcm
-# 	cat ../data/ola-englund-cerberus.44k1.s16be.pcm | ./encode --$(W) -c $(C) -r $(SL) -n $(NF) | pv | ./decode -r $(SL) | pacat --raw --format=s16be --rate=44100 --channels=$(C)
+	# yes | ffmpeg -i ~/Videos/Music\ Clips/OLA\ ENGLUND\ -\ Cerberus\ -\ \(NEW\ SINGLE\ 2019\)-SvYVSJteqF4.mkv -f s16be -acodec pcm_s16be -ac $(C) -filter:a "volume=-3dB" ../data/ola-englund-cerberus.44k1.s16be.pcm
+	cat ../../data/ola-englund-cerberus.44k1.s16be.pcm | ./encode -r $(SL) | pv | ./decode -r $(SL) | pacat --raw --format=s16be --rate=44100 --channels=2
 
 # .PHONY: atmos
 # atmos: $(BIN)

@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     // Output only channels containing data
     for( i=0; i<interval; i++ ) {
-      /* if (fabs(dsamples[i])<1) continue; */
+      /* if (fabs(dsamples[i])<(1.0/1024)) continue; */
       channel = htons((unsigned short)i);
       usample = hfloat_encode(dsamples[i]);
       usample = htons(usample);

@@ -25,6 +25,7 @@ extern "C" {
 int interval      = 1024;
 int inputrate     = 44100;
 int outputrate    = 44100;
+int bitrate       = 320000;
 int channels      = 1;
 double noisefloor = 0;
 
@@ -125,6 +126,14 @@ void argparse(int argc, char *argv[]) {
     ) {
       i++;
       nf = 0-atoi(argv[i]);
+      continue;
+    }
+
+    if ((strcmp("-b"       , argv[i]) == 0) ||
+        (strcmp("--bitrate", argv[i]) == 0)
+    ) {
+      i++;
+      bitrate = atoi(argv[i]);
       continue;
     }
 
